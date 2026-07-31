@@ -421,7 +421,38 @@ Rows after: 9998
 ```
 ## Task 8: Audit outliers 
 
+```
+def detect_zscore_outliers( df, column, threshold=3):
+    z = zscore(df[column], nan_policy="omit")
+# print(z)
+    return df[np.abs(z) > threshold]
 
+numeric_columns = [
+    "Freight",
+    "UnitPrice",
+    "Quantity",
+    "Discount",
+    "UnitsInStock",
+    "UnitsOnOrder"
+]
+
+def detect_iqr_outliers(df, column):
+    Q1 = df[column].quantile(0.25)
+    Q3 = df[column].quantile(0.75)
+    IQR = Q3 - Q1
+    lower = Q1 - 1.5 * IQR
+    upper = Q3 + 1.5 * IQR
+    return df[(df[column] < lower) | (df[column] > upper)]
+print("\n_______________Outliers Counts__________")
+for col in numeric_columns:
+    print(f"\n--- {col} ---")
+    print("Z-score outliers:", len(detect_zscore_outliers(df, col)))
+    print("IQR outliers:", len(detect_iqr_outliers(df, col)))
+
+```
+
+
+### Result
 ```
 _______________Outliers Counts__________
 
@@ -452,6 +483,32 @@ IQR outliers: 2202
 Process finished with exit code 0
 
 ```
+**Filtering rule: The current csv file contains columns from the ‘Orders’ table , ’Customers’ , ” Order Details” and “Products” table.
+Outlier detection was applied only to continuous numeric measures that represent business quantities
+(for example: 
+"Freight",
+"UnitPrice",
+"Quantity",
+"Discount",
+"UnitsInStock",
+"UnitsOnOrder"
+).**
+
+**The following columns were excluded:**
+-	Primary and foreign key columns (e.g., OrderID, CustomerID, ProductID) because they are identifiers rather than measurements. 
+-	Date columns (OrderDate,  and ShippedDate) were excluded from outlier detection because they represent points in time rather than continuous numeric business measures.  
+-	Columns with zero or near-zero variance because statistical outlier detection is not meaningful when there is little or no variation in the data.
+-	Tables like c.CompanyName,    c.Region,    c.Country were skipped because they are non numeric data.
+
+### Outlier Counts comparison between the two methods
+| Column | Z-score Outliers | IQR Outliers | Agreement | Explanation |
+|--------|-----------------:|-------------:|-----------|-------------|
+| Freight | 0 | 0 | **Agree** | Both methods found no statistically significant outliers in this column. |
+| UnitPrice | 236 | 475 | **Disagree** | The IQR method detected more outliers because it is more sensitive to skewed distributions, whereas the Z-score method is influenced by the mean and standard deviation. |
+| Quantity | 49 | 49 | **Agree** | Both methods identified the same number of outliers, indicating a consistent distribution for this variable. |
+| Discount | 472 | 838 | **Disagree** | The IQR method identified more outliers because the data is not normally distributed and contains many values at the extremes. |
+| UnitsInStock | 0 | 0 | **Agree** | Neither method detected any outliers, suggesting that stock levels fall within the expected range. |
+| UnitsOnOrder | 243 | 2202 | **Disagree** | The IQR method detected substantially more outliers because the distribution is highly skewed, while the Z-score method is less sensitive when the mean and standard deviation are affected by extreme values. |
 
 
 
