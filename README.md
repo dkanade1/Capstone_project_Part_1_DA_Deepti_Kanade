@@ -78,4 +78,53 @@ WHERE NOT EXISTS (
 2. There are customers who havent placed any order.
 <img width="424" height="404" alt="image" src="https://github.com/user-attachments/assets/c1aca755-ffb5-44d6-b610-39d8a28796c3" />
 
-## Task 3 
+## Task 3: GROUP BY + HAVING query 
+```python
+-- Task 3 GROUP BY + HAVING query 
+select count(SupplierID) from Suppliers GROUP BY Region HAVING count(SupplierID) > 2;
+select sum(Quantity),ProductID from 'Order Details' group BY ProductID having sum(Quantity) < 200000;
+```
+**Result:**
+<img width="982" height="242" alt="image" src="https://github.com/user-attachments/assets/e3c519c0-4a93-4b54-bb95-305cc39eb45e" />
+______________________________________________________________________
+<img width="1005" height="441" alt="image" src="https://github.com/user-attachments/assets/60389e27-6a26-4157-91c0-8cceb6dad047" />
+
+## Task 4: Inner and Left Join
+- The inner join query combines information from four related tables to create a single dataset containing Order information using  order, and product details.Orders is used as the starting (left) table because it represents the main business transaction. Every record in the final dataset is centered around an order and it is the primary entity being analyzed.Customers is joined to Orders using CustomerID because each order belongs to one customer.Order Details is joined to Orders using OrderID because to obtain order details.Products is joined to Order Details using ProductID to retrieve product-specific information.
+- The left join query retrieves all employees together with the territories assigned to them.Employees is the primary table and is placed on the left side because the objective is to list every employee, regardless of whether they have been assigned a territory and EmployeeTerritories stores the relationship between employees and territories. It is a child table that contains only employees who have territory assignments.
+```sql
+SELECT
+    o.OrderID,
+    o.OrderDate,
+    o.ShippedDate,
+	   o.Freight,
+    c.CustomerID,
+    c.CompanyName,
+    c.Region,
+    c.Country,
+    od.ProductID,
+    od.Quantity,
+    od.UnitPrice,
+	p.UnitsInStock,
+	p.UnitsOnOrder,
+    od.Discount
+FROM Orders o
+JOIN Customers c
+    ON o.CustomerID = c.CustomerID
+JOIN [Order Details] od
+    ON o.OrderID = od.OrderID
+Join Products p
+	ON od.ProductID = p.ProductID
+	LIMIT 10000;
+
+SELECT E.EmployeeID,ET.TerritoryID
+FROM Employees as E
+left  JOIN EmployeeTerritories as ET
+ON E.EmployeeID = ET.EmployeeID;
+```
+**Result:**
+<img width="1318" height="773" alt="image" src="https://github.com/user-attachments/assets/02afbbb6-904f-4eb6-a88f-3b2c8174f45d" />
+
+**There is one employee who has not been assigned a territory**
+
+<img width="401" height="700" alt="image" src="https://github.com/user-attachments/assets/25492248-3452-4f52-957d-066f4e9527cb" />
