@@ -130,7 +130,7 @@ ON E.EmployeeID = ET.EmployeeID;
 <img width="401" height="700" alt="image" src="https://github.com/user-attachments/assets/25492248-3452-4f52-957d-066f4e9527cb" />
 
 ## Task 5: Validate referential integrity before analysis
-**COUNT(DISTINCT EmployeeID) in Employees showed that 9 Employees have  Territories assigned to them.**
+- **COUNT(DISTINCT EmployeeID) in Employees showed that 9 Employees have  Territories assigned to them.**
 ```sql
 --a COUNT(DISTINCT ...) query 
 SELECT count(distinct E.EmployeeID)
@@ -140,7 +140,7 @@ ON E.EmployeeID = ET.EmployeeID;
 ```
 <img width="503" height="223" alt="image" src="https://github.com/user-attachments/assets/c7e77a20-5e97-421e-849c-549a0b22ad71" />
 
-**Grouping the Orders table by EmployeeID showed that many employees have more than one territory (HAVING COUNT(*) > 1 returned multiple rows), confirming that the relationship is 1:many.**
+- **Grouping the Orders table by EmployeeID showed that many employees have more than one territory (HAVING COUNT(*) > 1 returned multiple rows), confirming that the relationship is 1:many.**
 ```sql
 --a grouped child-count query 
 SELECT E.EmployeeID , count(*) as no_of_terr
@@ -152,7 +152,7 @@ HAVING COUNT(*) > 1;
 ```
 <img width="488" height="511" alt="image" src="https://github.com/user-attachments/assets/2ee53bcb-d4c1-44b1-9fbe-10c6f737ee4f" />
 
-**An orphan check using NOT EXISTS returned 1 rows, indicating that there is one order record with no customer information referencing in the customer table.One  orphan record was found.**
+- **An orphan check using NOT EXISTS returned 1 rows, indicating that there is one order record with no customer information referencing in the customer table.One  orphan record was found.**
 ```sql
 -- an explicit orphan check 
 SELECT *
