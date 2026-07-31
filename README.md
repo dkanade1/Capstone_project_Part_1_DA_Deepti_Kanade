@@ -48,7 +48,9 @@ INSERT INTO Orders (OrderID,CustomerID)
 VALUES (99997, 'XYZ89');
 ```
 <img width="717" height="177" alt="image" src="https://github.com/user-attachments/assets/fde35733-2eb2-49a0-b995-92748ab8a7e2" />
+
 ## Task 2 : Basic  SQL queries 
+
 ```python
 select * from Products where CategoryID IN ('1','8');
 select * from Products where CategoryID NOT IN ('1','8');
@@ -71,5 +73,9 @@ WHERE NOT EXISTS (
 );
 ```
 
+**Result:**
+1. There are no products which havent been ordered.
+2. There are customers who havent placed any order.
+<img width="424" height="404" alt="image" src="https://github.com/user-attachments/assets/c1aca755-ffb5-44d6-b610-39d8a28796c3" />
 
-
+## Task 3 
