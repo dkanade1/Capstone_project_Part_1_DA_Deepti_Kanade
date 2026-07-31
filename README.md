@@ -21,11 +21,11 @@ Shippers	Stores shipping company information.	ShipperID
 ### 📋 Detailed Table Descriptions
 
 #### 1. Sales & Order Fulfillment
-* **`Orders`** *(Header Records)*
+* **`Orders`** 
   * Stores overall transaction details, including order dates, required dates, shipping dates, freight charges, and shipping destination addresses.
   * **Primary Key:** `OrderID`
   * **Foreign Keys:** `CustomerID`, `EmployeeID`, `ShipVia` (references `Shippers.ShipperID`)
-* **`Order Details`** *(Line Items)*
+* **`Order Details`** 
   * Junction table creating a **Many-to-Many (N:M)** relationship between `Orders` and `Products`. Tracks historical unit price, quantity ordered, and applied discount percentage for every line item.
   * **Composite Primary Key:** (`OrderID`, `ProductID`)
   * **Foreign Keys:** `OrderID`, `ProductID`
@@ -58,7 +58,6 @@ Shippers	Stores shipping company information.	ShipperID
 * **`EmployeeTerritories` & `Territories` & `Region`**
   * Tracks sales territories assigned to specific employees, linked back to broader geographical regions (Eastern, Western, Northern, Southern).
   * **Primary Keys:** `TerritoryID`, `RegionID`
-  * **Junction Key:** (`EmployeeID`, `TerritoryID`)
-
+  
 
 <img width="743" height="166" alt="image" src="https://github.com/user-attachments/assets/048f27f5-e6ef-4cd8-906e-4085fc7f2d92" />
