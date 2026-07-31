@@ -32,3 +32,44 @@ Entity-Relationship Diagram (ERD)
 | Employees | Employees | One-to-Many (Manager Hierarchy) | `ReportsTo` |
 
 
+## Tables Used in This Project
+### The following tables were used for data cleaning and analysis:
+
+* Orders – order dates, shipped dates, freight charges.
+* Customers – company information, region, and country.
+* Order Details – quantity, unit price, discount.
+* Products – unit price, inventory, and reorder information.
+
+## Task 1:	Stand up a two-table (or more) relational dataset :
+#### Foreign key integrity check 
+```python
+PRAGMA foreign_keys = ON;
+INSERT INTO Orders (OrderID,CustomerID)
+VALUES (99997, 'XYZ89');
+```
+<img width="717" height="177" alt="image" src="https://github.com/user-attachments/assets/fde35733-2eb2-49a0-b995-92748ab8a7e2" />
+## Task 2 : Basic  SQL queries 
+```python
+select * from Products where CategoryID IN ('1','8');
+select * from Products where CategoryID NOT IN ('1','8');
+select * from Orders where OrderDate BETWEEN '2016-7-11' AND '2019-01-01' ;
+select * from Orders where OrderDate BETWEEN '2016-7-11' AND '2019-01-01' ORDER BY CustomerID ASC , OrderDate DESC;
+select * from Products p 
+where NOT EXISTS (
+select *
+from 'Order Details' as o
+ where  p.ProductID = o.ProductID
+); 
+
+SELECT c.CustomerID,
+       c.CompanyName
+FROM Customers c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Orders o
+    WHERE o.CustomerID = c.CustomerID
+);
+```
+
+
+
