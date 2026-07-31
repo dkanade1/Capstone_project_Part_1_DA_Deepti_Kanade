@@ -18,4 +18,47 @@ Suppliers	Stores supplier information.	SupplierID
 Employees	Stores employee information responsible for processing orders.	EmployeeID
 Shippers	Stores shipping company information.	ShipperID
 
+### 📋 Detailed Table Descriptions
+
+#### 1. Sales & Order Fulfillment
+* **`Orders`** *(Header Records)*
+  * Stores overall transaction details, including order dates, required dates, shipping dates, freight charges, and shipping destination addresses.
+  * **Primary Key:** `OrderID`
+  * **Foreign Keys:** `CustomerID`, `EmployeeID`, `ShipVia` (references `Shippers.ShipperID`)
+* **`Order Details`** *(Line Items)*
+  * Junction table creating a **Many-to-Many (N:M)** relationship between `Orders` and `Products`. Tracks historical unit price, quantity ordered, and applied discount percentage for every line item.
+  * **Composite Primary Key:** (`OrderID`, `ProductID`)
+  * **Foreign Keys:** `OrderID`, `ProductID`
+
+#### 2. Product Catalog & Inventory
+* **`Products`**
+  * Core inventory catalog detailing item pricing, stock quantities (`UnitsInStock`), reorder thresholds (`ReorderLevel`), and stock status (`Discontinued`).
+  * **Primary Key:** `ProductID`
+  * **Foreign Keys:** `SupplierID`, `CategoryID`
+* **`Categories`**
+  * High-level product classification (e.g., Beverages, Condiments, Dairy Products) along with text/image descriptions.
+  * **Primary Key:** `CategoryID`
+* **`Suppliers`**
+  * Vendor contact information, address details, and regional location data for product sourcing.
+  * **Primary Key:** `SupplierID`
+
+#### 3. Customer & Shipping Logistics
+* **`Customers`**
+  * Client demographics, company names, point-of-contact roles, and full billing addresses.
+  * **Primary Key:** `CustomerID` (Alphanumeric 5-character string)
+* **`Shippers`**
+  * Freight and carrier services responsible for delivering orders (e.g., Speedy Express, United Package, Federal Shipping).
+  * **Primary Key:** `ShipperID`
+
+#### 4. Human Resources & Sales Territories
+* **`Employees`**
+  * Staff profile records including reporting hierarchies (self-referencing relationship via `ReportsTo`), titles, hire dates, and home contact details.
+  * **Primary Key:** `EmployeeID`
+  * **Foreign Key:** `ReportsTo` (Self-referencing foreign key to `Employees.EmployeeID`)
+* **`EmployeeTerritories` & `Territories` & `Region`**
+  * Tracks sales territories assigned to specific employees, linked back to broader geographical regions (Eastern, Western, Northern, Southern).
+  * **Primary Keys:** `TerritoryID`, `RegionID`
+  * **Junction Key:** (`EmployeeID`, `TerritoryID`)
+
+
 <img width="743" height="166" alt="image" src="https://github.com/user-attachments/assets/048f27f5-e6ef-4cd8-906e-4085fc7f2d92" />
