@@ -5,19 +5,6 @@ The Northwind sample database represents a small-scale specialty food export-imp
 Entity-Relationship Diagram (ERD)
 <img width="763" height="666" alt="image" src="https://github.com/user-attachments/assets/2a910040-eb0f-40a0-9c36-1d60524c4315" />
 
-
-
-Main Tables
-Table	Description	Primary Key
-Customers	Stores customer information such as company name, region, and country.	CustomerID
-Orders	Stores customer orders, including order date, shipping date, freight, customer, and employee information.	OrderID
-Order Details	Stores the products included in each order, along with quantity, unit price, and discount.	(OrderID, ProductID)
-Products	Stores product information, prices, stock levels, reorder levels, and supplier/category references.	ProductID
-Categories	Stores product categories.	CategoryID
-Suppliers	Stores supplier information.	SupplierID
-Employees	Stores employee information responsible for processing orders.	EmployeeID
-Shippers	Stores shipping company information.	ShipperID
-
 ### 📋 Detailed Table Descriptions
 
 #### 1. Sales & Order Fulfillment
@@ -27,8 +14,7 @@ Shippers	Stores shipping company information.	ShipperID
   * **Foreign Keys:** `CustomerID`, `EmployeeID`, `ShipVia` (references `Shippers.ShipperID`)
 * **`Order Details`** 
   * Junction table creating a **Many-to-Many (N:M)** relationship between `Orders` and `Products`. Tracks historical unit price, quantity ordered, and applied discount percentage for every line item.
-  * **Composite Primary Key:** (`OrderID`, `ProductID`)
-  * **Foreign Keys:** `OrderID`, `ProductID`
+   * **Foreign Keys:** `OrderID`, `ProductID`
 
 #### 2. Product Catalog & Inventory
 * **`Products`**
