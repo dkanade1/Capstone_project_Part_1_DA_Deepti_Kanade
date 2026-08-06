@@ -39,6 +39,10 @@ Entity-Relationship Diagram (ERD)
 * Customers – company information, region, and country.
 * Order Details – quantity, unit price, discount.
 * Products – unit price, inventory, and reorder information.
+## Prerequisites
+Before getting started, make sure your development environment meets the following requirements:
+Python: Version 3.11.7 
+For the rest , please refer to Requirements.txt
 
 ## Task 1:	Stand up a two-table (or more) relational dataset :
 #### Foreign key integrity check 
